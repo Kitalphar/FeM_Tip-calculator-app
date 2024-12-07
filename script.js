@@ -159,10 +159,12 @@ function displayValues() {
 }
 
 function onResetButtonClick() {
-    form[0].reset();
-    numbers.fill(0);
-    btn_reset.classList.add('empty_state');
-    selectRadioButton(defaultTip, true);
-    tipAmountDisplay.textContent = "$0.00";
-    TotalAmountDisplay.textContent = "$0.00";
+    if (!btn_reset.classList.contains('empty_state')) {
+        form[0].reset();
+        numbers.fill(0);
+        btn_reset.classList.add('empty_state');
+        selectRadioButton(defaultTip, true);
+        tipAmountDisplay.textContent = "$0.00";
+        TotalAmountDisplay.textContent = "$0.00";
+    }
 }
