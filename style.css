@@ -198,7 +198,6 @@ fieldset > div > label {
 
 fieldset > div,
 #input_custom {
-    border: 1px white solid;
     flex: 1 1 calc(24%);
     height: 3.15rem;
     text-align: center;
