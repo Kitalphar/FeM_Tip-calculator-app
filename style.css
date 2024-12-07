@@ -1,0 +1,394 @@
+@font-face {
+    font-family: 'Space Mono';
+    src: url(./assets/fonts/SpaceMono-Regular.ttf);
+}
+
+:root {
+    --clr-White: hsl(0, 0%, 100%);
+    --clr-cyan: hsl(172, 67%, 45%);
+    --clr-error: hsl(4, 100%, 67%);
+    --clr-Grayish-cyan-700: hsl(183, 100%, 15%);
+    --clr-Grayish-cyan-400: hsl(186, 14%, 43%);
+    --clr-Grayish-cyan-300: hsl(184, 14%, 56%);
+    --clr-Grayish-cyan-200: hsl(185, 41%, 84%);
+    --clr-Grayish-cyan-100: hsl(189, 41%, 97%);
+    
+    --ff-default: 'Space Mono';
+    --fs-tip-input: 1.5rem;
+    --fw-bold: 700;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    background-color: var(--clr-Grayish-cyan-200);
+    font-family: var(--ff-default);
+}
+
+main {
+    width: 100%;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+
+main,
+h1,
+.content-wrapper,
+.app-container > form,
+fieldset,
+fieldset > div,
+section:last-of-type > div:first-of-type,
+section:last-of-type > div:first-of-type > div {
+    display: flex;
+}
+
+h1,
+.content-wrapper,
+section:last-of-type > div:first-of-type {
+    flex-direction: column;
+}
+
+.content-wrapper {
+    /* min-width: 40rem; */
+    max-width: 57.5rem;
+    margin-inline: 1rem;
+    flex: 1;
+}
+
+.header {
+    text-align: center;
+    align-items: center;
+    margin-bottom: 5rem;
+}
+
+h1 {
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+}
+
+h2 {
+    margin-left:auto;
+    font-size: 2.8rem;
+    color: var(--clr-cyan);
+    margin-top: auto;
+}
+
+h2,
+legend,
+section:first-of-type > div > label,
+input[type="number"],
+fieldset label,
+ul li:last-of-type,
+#btn_reset {
+    font-weight: var(--fw-bold);
+}
+
+.app-container {
+    background-color: var(--clr-White);
+    width: 100%;
+    padding: 2rem;
+    border-radius: 2rem;
+}
+
+.app-container > form {
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+section {flex: 1;}
+
+section > div:first-of-type {
+    margin-inline: 1rem;
+}
+
+/* ---------- app left side ---------- */
+
+section:first-of-type {
+    margin-top: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+section:first-of-type > div > label,
+legend {
+    color: var(--clr-Grayish-cyan-400);
+    font-size: 0.9rem;
+}
+
+input[type="number"]
+{
+    width: 100%;
+    background-color: var(--clr-Grayish-cyan-100);
+    border: none;
+    color: var(--clr-Grayish-cyan-700);
+    text-align: right;
+    cursor: pointer;
+    padding-right: 1rem;
+    background-repeat: no-repeat;
+    background-position: center left 1rem;
+    background-size: 0.78rem;
+    -moz-appearance: textfield;
+}
+
+input[type="number"]::placeholder {
+    color: var(--clr-Grayish-cyan-300);
+    /* margin-right: 1rem; */
+}
+
+#price_input {
+    background-image: url(./images/icon-dollar.svg);
+}
+
+#guest_number_input {
+    background-image: url(./images/icon-person.svg);
+}
+
+input[type="number"],
+fieldset label {
+    font-family: var(--ff-default);
+    font-size: var(--fs-tip-input);
+}
+
+div > input[type="number"] {
+    margin-top: 0.5rem;
+}
+
+fieldset {
+    border: none;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 2.6rem;
+    padding-top: 1.1rem;
+    padding-bottom: 2.4rem;
+}
+
+section:first-of-type input,
+fieldset > div {
+    height: 2.9rem;
+    border-radius: 0.4rem;
+}
+
+input[type="radio"] {
+    appearance: none;
+    outline: none;
+}
+
+fieldset > div {
+    background-color: var(--clr-Grayish-cyan-700);
+    align-items: center;
+    justify-content: center;
+    color: var(--clr-White);
+}
+
+fieldset > div > label {
+    width: 100%;
+    padding-block: 0.3rem;
+    border-radius: 0.3rem;
+}
+
+fieldset > div,
+#input_custom {
+    border: 1px white solid;
+    flex: 1 1 calc(24%);
+    height: 3.15rem;
+    text-align: center;
+    padding: 0;
+}
+
+#input_custom::placeholder {
+    /* margin-right: 0; */
+    color: var(--clr-Grayish-cyan-400);
+}
+
+#guest_number_error {
+    float: inline-end;
+    color: var(--clr-error);
+}
+
+/* ---------- app right side ---------- */
+
+section:last-of-type {
+    background-color: var(--clr-Grayish-cyan-700);
+    border-radius: 1rem;
+}
+
+section:last-of-type > div:first-of-type {
+    padding-inline: 1.5rem;
+    margin-top: 0.5rem;
+    height: auto;
+}
+
+section:last-of-type > div:first-of-type > div {
+    flex: 1;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-top: 2rem;
+}
+
+ul {
+    align-self: center;
+}
+
+ul li {
+    list-style-type: none;
+}
+
+ul li:first-of-type {
+    color: var(--clr-White);
+}
+
+ul li:last-of-type {
+    color: var(--clr-Grayish-cyan-300);
+    font-size: 0.8rem;
+}
+
+#btn_reset {
+    height: 3rem;
+    font-size: 1rem;
+    font-family: var(--ff-default);
+    color: var(--clr-Grayish-cyan-700);
+    text-align: center;
+    text-transform: uppercase;
+    background-color: var(--clr-cyan);
+    border: none;
+    border-radius: 0.3rem;
+    margin-top: 7.7rem;
+}
+
+/* ---------- Number input spinners ---------- */
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* ---------- Events & Event styles ---------- */
+
+input[type="number"]:placeholder-shown {
+    outline: none;
+}
+
+input[type="number"]:hover,
+input[type="number"]:focus-visible {
+    outline: 0.125rem solid var(--clr-cyan);
+}
+
+fieldset > div:hover,
+fieldset > div > label:hover,
+.selected {
+    cursor: pointer;
+    color: var(--clr-Grayish-cyan-700);
+    background-color: var(--clr-cyan);
+}
+
+#btn_reset:hover,
+#btn_reset:focus-visible {
+    cursor: pointer;
+    background-color: var(--clr-Grayish-cyan-200);
+}
+
+.hidden {
+    display: none;
+}
+
+.empty_state {
+    background-color: hsl(180, 70%, 25%) !important;
+    color: hsl(183, 100%, 20%) !important;
+}
+
+#guest_number_input.show-error:hover,
+#guest_number_input.show-error:focus-visible,
+.show-error {
+    outline: 0.125rem solid var(--clr-error);
+}
+
+#input_custom:not(:placeholder-shown) {
+    outline: 0.125rem solid var(--clr-cyan);
+}
+
+/* ---------- Media Query ---------- */
+
+@media (max-width: 48rem) {
+
+    main {
+        height: 100%;
+    }
+
+    .header {
+        margin-block: 2.2rem;
+     }
+
+    .app-container > form {
+        flex-direction: column;
+    }
+
+    #btn_reset {
+        margin-top: 5rem;
+        margin-bottom: 2rem;
+    }
+}
+
+@media (max-width: 27rem) {
+
+    .content-wrapper {
+        margin-inline: 0;
+    }
+
+     h2 {
+        font-size: 1.8rem;
+    }
+
+    section:first-of-type {
+        margin-top: 0;
+        padding-inline: 0.5rem;
+    }
+
+    section > div:first-of-type {
+        margin-inline: 0;
+    }
+
+    .app-container {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        padding-inline: 1.5rem;
+    }
+
+    .app-container > form {
+        gap: 1rem;
+     }
+
+    fieldset > div,
+    #input_custom {
+        flex: 1 1 calc(45%);
+    }
+
+    section:last-of-type > div:first-of-type {
+        margin-top: 1.2rem;
+    }
+
+    section:last-of-type > div:first-of-type > div {
+        margin-top: 1.3rem;
+    }
+
+    fieldset {
+        padding-top: 0.7rem;
+        padding-bottom: 1.8rem
+    }
+
+    #btn_reset {
+        margin-top: 2.4rem ;
+        margin-bottom: 1.5rem;
+        font-size: 1.3rem;
+    }
+}
