@@ -98,9 +98,6 @@ function handleCustomKeydown(event) {
             event.preventDefault();
         }
     }
-    console.log('event key: ',event.key);
-    console.log(`${event.target.id} value: `,event.target.value);
-    console.log('isDigit', isDigit, 'isDot', isDot, 'isArrowKey', isArrowKey, 'isModifier', isModifier, 'isNumpadDigit', isNumpadDigit);
 }
 
 function isBelowMaxValue(target, maxValue) {
@@ -109,7 +106,6 @@ function isBelowMaxValue(target, maxValue) {
             return Number(target.value);
         }
         else {
-            console.log('isBelowMaxValue: ', target.value);
             target.value = maxValue - 1;
             return maxValue - 1;
         }
@@ -132,7 +128,6 @@ function onBillValueChanged() {
             if (priceInput.classList.contains('show-error')) {
                 removeZeroInputError(priceInput);
             }
-            console.log('sent value:', priceInput.value)
             numbers[0] = isBelowMaxValue(priceInput, maxBillValue);
             handleDisplayValues();
         }
