@@ -7,10 +7,13 @@ const guestNumberInput = document.getElementById('guest_number_input');
 const tipAmountDisplay = document.getElementById('tip_amount');
 const TotalAmountDisplay = document.getElementById('bill_total');
 const form = document.getElementsByTagName('form');
-const errorNotice = document.getElementById('guest_number_error');
+const errorNotice = document.getElementsByTagName('span'); //Bill, People
 const btn_reset = document.getElementById('btn_reset');
 const defaultTip = document.getElementById('btn_p5');
 
+const maxBillValue = 10000000;
+const maxCustomTipValue = 1000;
+const maxNumberOfPeople = 100;
 
 function onPageLoad() {
     for (let i = 0; i < tipInput.length; i++) {
@@ -69,33 +72,73 @@ function selectRadioButton(selected, remove) {
 }
 
 function handleCustomKeydown(event) {
-    
-    const char = String.fromCharCode(event.which);
-    const isDigit = /[0-9]/.test(char);
+    const isDigit = /[0-9]/.test(event.key);
     const isDot = event.key === ".";
-    const isBackspace = event.which === 8;
+    const isArrowKey = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key);
+    const isModifier = ["Backspace", "Tab"].includes(event.key);
+    const isBannedModifier = ["Control", "Alt", "AltGraph", "Shift", "Meta"].includes(event.key);
     const isNumpadDigit = (event.key >= '0' && event.key <='9') && (event.location === KeyboardEvent.DOM_KEY_LOCATION_NUMPAD);
-    const isOperator = [',', '+', '-', '*', '/', '%', 'Enter'].includes(event.key);
-    const isTab = event.key === 'Tab';
+
+    if (isBannedModifier) { //This is here because of Google Chrome, but it didn't help.
+        event.preventDefault();
+        return;
+    }
 
     if (event.target == guestNumberInput) {
-        if (!isDigit && !isBackspace && !isNumpadDigit && !isTab) {
+        if (!isDigit && !isArrowKey && !isModifier && !isNumpadDigit) {
             event.preventDefault();
         }
     }
     else {
-        if (!isDigit && !isDot && !isBackspace && !isNumpadDigit && isOperator) {
+        if (!isDigit && !isDot && !isArrowKey && !isModifier && !isNumpadDigit) {
             event.preventDefault();
            }
 
-           if (char ==='.' && this.value.includes('.')) { event.preventDefault();}
+           if (isDot && event.target.value === "" || isDot && event.target.value.includes('.')) {
+            event.preventDefault();
+        }
+    }
+    console.log('event key: ',event.key);
+    console.log(`${event.target.id} value: `,event.target.value);
+    console.log('isDigit', isDigit, 'isDot', isDot, 'isArrowKey', isArrowKey, 'isModifier', isModifier, 'isNumpadDigit', isNumpadDigit);
+}
+
+function isBelowMaxValue(target, maxValue) {
+    if (Number(target.value) > 0) {
+        if (Number(target.value) < maxValue) {
+            return Number(target.value);
+        }
+        else {
+            console.log('isBelowMaxValue: ', target.value);
+            target.value = maxValue - 1;
+            return maxValue - 1;
+        }
+    }
+    else {
+        /*Checking for a value greater than 0, and this line is here because
+        Google Chrome somehow bypassed everything after pressing AltGr + any number key
+        staging a special character, and then the next input let trough even letters.*/
+        target.value = "";
+        return 0;
     }
 }
 
 function onBillValueChanged() {
-    if (priceInput.value !== "" && priceInput.value > 0) {
-        numbers[0] = Number(priceInput.value);
-        handleDisplayValues();
+    if (priceInput.value !== "") {
+        if (priceInput.value == 0) {
+            showZeroInputError(priceInput);
+        }
+        else {
+            if (priceInput.classList.contains('show-error')) {
+                removeZeroInputError(priceInput);
+            }
+            console.log('sent value:', priceInput.value)
+            numbers[0] = isBelowMaxValue(priceInput, maxBillValue);
+            handleDisplayValues();
+        }
+    }
+    else {
+        removeZeroInputError(priceInput);
     }
 }
 
@@ -107,7 +150,7 @@ function onRadioChanged() {
 
 function onCustomTipChanged() {
     if (customTipInput.value !== "" && customTipInput.value >= 0) {
-        numbers[1] = roundToTwoDecimals(Number(customTipInput.value));
+        numbers[1] = roundToTwoDecimals(isBelowMaxValue(customTipInput, maxCustomTipValue));
         removeSelection(false);
         handleDisplayValues();
     }
@@ -116,21 +159,44 @@ function onCustomTipChanged() {
 function onGuestNumberChanged() {
     if (guestNumberInput.value !== "") {
         if (guestNumberInput.value == 0) {
-            errorNotice.classList.remove('hidden'); 
-            guestNumberInput.classList.add('show-error');
+            showZeroInputError(guestNumberInput);
         }
         else {
             if (guestNumberInput.classList.contains('show-error')) {
-                errorNotice.classList.add('hidden');
-                guestNumberInput.classList.remove('show-error');
+                removeZeroInputError(guestNumberInput);
             }
-            numbers[2] = Number(guestNumberInput.value);
+            numbers[2] = isBelowMaxValue(guestNumberInput,maxNumberOfPeople);
             handleDisplayValues();
         }
     }
     else {
-        errorNotice.classList.add('hidden');
-        guestNumberInput.classList.remove('show-error');
+        removeZeroInputError(guestNumberInput);
+    }
+}
+
+function showZeroInputError(target) {
+    switch (target) {
+        case priceInput:
+            errorNotice[0].classList.remove('hidden');
+            priceInput.classList.add('show-error');
+            break;
+        case guestNumberInput:
+            errorNotice[1].classList.remove('hidden'); 
+            guestNumberInput.classList.add('show-error');
+            break;
+    }
+}
+
+function removeZeroInputError(target) {
+    switch (target) {
+        case priceInput:
+            errorNotice[0].classList.add('hidden');
+            priceInput.classList.remove('show-error');
+            break;
+        case guestNumberInput:
+            errorNotice[1].classList.add('hidden');
+            guestNumberInput.classList.remove('show-error');
+            break;
     }
 }
 
